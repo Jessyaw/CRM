@@ -2,7 +2,7 @@
   {
     "ContainingType": "CRM.Controllers.CommentController",
     "Method": "AddComment",
-    "RelativePath": "AddComment",
+    "RelativePath": "Comment/AddComment",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -28,7 +28,7 @@
   {
     "ContainingType": "CRM.Controllers.CommentController",
     "Method": "GetComments",
-    "RelativePath": "GetComment",
+    "RelativePath": "Comment/GetComment",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

@@ -6,13 +6,13 @@ namespace CRM.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CommentController : Controller
+    public class CommentController : ControllerBase
     {
         private readonly ICommentServices _commentServices;
         public CommentController(ICommentServices commentServices) {
             _commentServices = commentServices;
         }
-       
+     
 
         [HttpPost("AddComment")]
         public JsonResponse AddComment([FromBody]Comments comments)
