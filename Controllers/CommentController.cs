@@ -12,10 +12,7 @@ namespace CRM.Controllers
         public CommentController(ICommentServices commentServices) {
             _commentServices = commentServices;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
 
         [HttpPost("AddComment")]
         public JsonResponse AddComment([FromBody]Comments comments)
