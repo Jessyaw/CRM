@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class CommentController : Controller
     {
         private readonly ICommentServices _commentServices;
