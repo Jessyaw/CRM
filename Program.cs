@@ -22,7 +22,7 @@ builder.Services.AddCors(option =>
     option.AddPolicy("AllowReactApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+            policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://jessyaw.github.io")
             .AllowAnyHeader()
             .AllowAnyMethod();
         });
