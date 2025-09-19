@@ -334,10 +334,10 @@ C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\staticwebassets.b
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\staticwebassets.development.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\CRM.csproj.Up2Date
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\CRM.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\refint\CRM.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\CRM.pdb
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\CRM.genruntimeconfig.cache
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\ref\CRM.dll
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
