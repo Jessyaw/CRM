@@ -11,8 +11,7 @@ namespace CRM.Controllers
         private readonly ICommentServices _commentServices;
         public CommentController(ICommentServices commentServices) {
             _commentServices = commentServices;
-        }
-     
+        }     
 
         [HttpPost("AddComment")]
         public JsonResponse AddComment([FromBody]Comments comments)
