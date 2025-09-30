@@ -5,6 +5,8 @@ namespace CRM.Services.Interfaces
     public interface ILibraryServices
     {
         public JsonResponse AddBook(Library library);
+        public JsonResponse DeleteUser(User user);
+        public JsonResponse DeleteBook(Book book);
         public JsonResponse AddMember(User user);
         public JsonResponse AddUpdateBorrowReturnDetails(BorrowOrReturn borrowOrReturn);
         public JsonResponse GetStatData();
@@ -15,6 +17,7 @@ namespace CRM.Services.Interfaces
         public JsonResponse GetMemberData();
         public JsonResponse GetBorrowedData();
         public JsonResponse GetReturnData();
+        public JsonResponse GetCategory();
     
     }
 }

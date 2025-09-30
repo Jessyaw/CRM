@@ -125,6 +125,58 @@
   },
   {
     "ContainingType": "CRM.Controllers.LibraryController",
+    "Method": "DeleteBook",
+    "RelativePath": "DeleteBook",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "book",
+        "Type": "CRM.Models.Book",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CRM.Models.JsonResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CRM.Controllers.LibraryController",
+    "Method": "DeleteUser",
+    "RelativePath": "DeleteUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "CRM.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CRM.Models.JsonResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CRM.Controllers.LibraryController",
     "Method": "GetBookData",
     "RelativePath": "GetBookData",
     "HttpMethod": "GET",
@@ -147,6 +199,26 @@
     "ContainingType": "CRM.Controllers.LibraryController",
     "Method": "GetBorrowedData",
     "RelativePath": "GetBorrowedData",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CRM.Models.JsonResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CRM.Controllers.LibraryController",
+    "Method": "GetCategory",
+    "RelativePath": "GetCategory",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

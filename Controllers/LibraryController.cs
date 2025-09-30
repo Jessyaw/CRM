@@ -18,6 +18,16 @@ namespace CRM.Controllers
         {
             return _libraryServices.AddBook(library);
         }
+        [HttpPost("DeleteBook")]
+        public JsonResponse DeleteBook([FromBody] Book book)
+        {
+            return _libraryServices.DeleteBook(book);
+        }
+        [HttpPost("DeleteUser")]
+        public JsonResponse DeleteUser([FromBody] User user)
+        {
+            return _libraryServices.DeleteUser(user);
+        }
         [HttpPost("AddMember")]
         public JsonResponse AddMember([FromBody] User user)
         {
@@ -77,6 +87,12 @@ namespace CRM.Controllers
         public JsonResponse GetReturnData()
         {
             return _libraryServices.GetReturnData();
+        }
+
+        [HttpGet("GetCategory")]
+        public JsonResponse GetCategory()
+        {
+            return _libraryServices.GetCategory();
         }
 
 

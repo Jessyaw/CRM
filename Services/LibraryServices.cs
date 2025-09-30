@@ -77,6 +77,64 @@ namespace CRM.Services
             }
             return json;
         }
+        public JsonResponse DeleteBook(Book book)
+        {
+
+            JsonResponse json = new JsonResponse();
+            try
+            {
+
+                SqlConnection connection = new SqlConnection(_connectionString);
+                SqlCommand sqlCommand = new SqlCommand("SP_DeleteBook", connection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@ID", book.ID);
+                connection.Open();
+
+                DataTable dt = new DataTable();
+
+                SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+                adapter.Fill(dt);
+                DataRow dr = dt.Rows[0];
+                json.Status = dr["Status"].ToString();
+                json.Message = dr["Message"].ToString();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                json.Status = "F";
+                json.Message = "Something went wrong";
+            }
+            return json;
+        }
+        public JsonResponse DeleteUser(User user)
+        {
+
+            JsonResponse json = new JsonResponse();
+            try
+            {
+
+                SqlConnection connection = new SqlConnection(_connectionString);
+                SqlCommand sqlCommand = new SqlCommand("SP_DeleteMember", connection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@Membername", user.MemberName);
+                connection.Open();
+
+                DataTable dt = new DataTable();
+
+                SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+                adapter.Fill(dt);
+                DataRow dr = dt.Rows[0];
+                json.Status = dr["Status"].ToString();
+                json.Message = dr["Message"].ToString();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                json.Status = "F";
+                json.Message = "Something went wrong";
+            }
+            return json;
+        }
         public JsonResponse AddUpdateBorrowReturnDetails(BorrowOrReturn borrowOrReturn)
         {
 
@@ -93,7 +151,6 @@ namespace CRM.Services
                 sqlCommand.Parameters.AddWithValue("@BookQuantity", borrowOrReturn.BookQuantity);
                 sqlCommand.Parameters.AddWithValue("@BorrowedDate", borrowOrReturn.BorrowedDate);
                 sqlCommand.Parameters.AddWithValue("@DueDate", borrowOrReturn.DueDate);
-                sqlCommand.Parameters.AddWithValue("@BookStatusID", borrowOrReturn.BookStatusID);
                 sqlCommand.Parameters.AddWithValue("@ReturnDate", borrowOrReturn.ReturnDate);
                 connection.Open();
 
@@ -115,7 +172,7 @@ namespace CRM.Services
         }
         public JsonResponse GetStatData()
         {
-            Dashboard dashboard = new Dashboard();
+
             JsonResponse json = new JsonResponse();
             try
             {
@@ -131,6 +188,7 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
+                    Dashboard dashboard = new Dashboard();
                     dashboard.TotalBooks = Convert.ToInt32(dr["Total Books"]);
                     dashboard.TotalMembers = Convert.ToInt32(dr["Total Members"]);
                     dashboard.BooksBorrowedToday = Convert.ToInt32(dr["Books Borrowed Today"]);
@@ -152,7 +210,7 @@ namespace CRM.Services
         }
         public JsonResponse GetRecentlyBorrowedData()
         {
-            RecentlyBorrowed recentlyBorrowed = new RecentlyBorrowed();
+
             JsonResponse json = new JsonResponse();
             try
             {
@@ -168,6 +226,7 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
+                    RecentlyBorrowed recentlyBorrowed = new RecentlyBorrowed();
                     recentlyBorrowed.ID = Convert.ToInt32(dr["ID"]);
                     recentlyBorrowed.Title = dr["Title"].ToString();
                     recentlyBorrowed.Author = dr["Author"].ToString();
@@ -188,7 +247,7 @@ namespace CRM.Services
         }
         public JsonResponse GetRecentlyReturnData()
         {
-            RecentlyReturned recentlyReturned = new RecentlyReturned();
+
             JsonResponse json = new JsonResponse();
             try
             {
@@ -204,6 +263,7 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
+                    RecentlyReturned recentlyReturned = new RecentlyReturned();
                     recentlyReturned.ReturnID = Convert.ToInt32(dr["ID"]);
                     recentlyReturned.MemberName = dr["Member name"].ToString();
                     recentlyReturned.Author = dr["Author"].ToString();
@@ -224,7 +284,7 @@ namespace CRM.Services
         }
         public JsonResponse GetOverdueData()
         {
-            Overdue overdue = new Overdue();
+
             JsonResponse json = new JsonResponse();
             try
             {
@@ -240,6 +300,7 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
+                    Overdue overdue = new Overdue();
                     overdue.ID = Convert.ToInt32(dr["ID"]);
                     overdue.MemberName = dr["Member name"].ToString();
                     overdue.Title = dr["Title"].ToString();
@@ -260,7 +321,7 @@ namespace CRM.Services
         }
         public JsonResponse GetBookData()
         {
-            Book book = new Book();
+
             JsonResponse json = new JsonResponse();
             try
             {
@@ -276,10 +337,12 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
+                    Book book = new Book();
                     book.ID = Convert.ToInt32(dr["ID"]);
                     book.Title = dr["Title"].ToString();
                     book.Author = dr["Author"].ToString();
                     book.Category = dr["Category"].ToString();
+                    book.CategoryID = Convert.ToInt32(dr["CategoryID"]);
                     book.CopiesAvailable = Convert.ToInt32(dr["CopiesAvailable"]);
                     book.IsAvailable = Convert.ToBoolean(dr["IsAvailable"]);
                     bookList.Add(book);
@@ -298,7 +361,7 @@ namespace CRM.Services
         }
         public JsonResponse GetMemberData()
         {
-            User user = new User();
+
             JsonResponse json = new JsonResponse();
             try
             {
@@ -314,6 +377,7 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
+                    User user = new User();
                     user.ID = Convert.ToInt32(dr["ID"]);
                     user.MemberName = dr["Membername"].ToString();
                     user.EmailID = dr["EmailID"].ToString();
@@ -334,7 +398,7 @@ namespace CRM.Services
         }
         public JsonResponse GetBorrowedData()
         {
-            Borrow borrow = new Borrow();
+
             JsonResponse json = new JsonResponse();
             try
             {
@@ -350,6 +414,7 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
+                    Borrow borrow = new Borrow();
                     borrow.ID = Convert.ToInt32(dr["ID"]);
                     borrow.MemberName = dr["Membername"].ToString();
                     borrow.Title = dr["Title"].ToString();
@@ -373,7 +438,7 @@ namespace CRM.Services
         }
         public JsonResponse GetReturnData()
         {
-            Return ret = new Return();
+
             JsonResponse json = new JsonResponse();
             try
             {
@@ -389,6 +454,7 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
+                    Return ret = new Return();
                     ret.ID = Convert.ToInt32(dr["ID"]);
                     ret.MemberName = dr["Membername"].ToString();
                     ret.Title = dr["Title"].ToString();
@@ -402,6 +468,40 @@ namespace CRM.Services
                 json.Message = "Success";
                 json.Status = "S";
                 json.Data = returnList;
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                json.Status = "F";
+                json.Message = "Something went wrong";
+            }
+            return json;
+        }
+        public JsonResponse GetCategory()
+        {
+
+            JsonResponse json = new JsonResponse();
+            try
+            {
+                List<Category> categoryList = new List<Category>();
+                SqlConnection connection = new SqlConnection(_connectionString);
+                SqlCommand sqlCommand = new SqlCommand("SP_GetCategory", connection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                connection.Open();
+                DataTable dt = new DataTable();
+                SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+                adapter.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Category category = new Category();
+                    category.ID = Convert.ToInt32(dr["ID"]);
+                    category.BookCategory = dr["Category"].ToString();
+
+                    categoryList.Add(category);
+                }
+                json.Message = "Success";
+                json.Status = "S";
+                json.Data = categoryList;
                 connection.Close();
             }
             catch (Exception e)
