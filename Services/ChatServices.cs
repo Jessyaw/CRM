@@ -17,6 +17,7 @@ namespace CRM.Services
         public ChatServices(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _geminiKey = configuration["GEMINI_KEY"];
         }
 
         public async Task<Chat> ListAvailableModels()

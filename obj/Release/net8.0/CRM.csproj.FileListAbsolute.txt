@@ -169,6 +169,7 @@ C:\Jessy's folder\Project\Web API\CRM\CRM\obj\Release\net8.0\refint\CRM.dll
 C:\Jessy's folder\Project\Web API\CRM\CRM\obj\Release\net8.0\CRM.pdb
 C:\Jessy's folder\Project\Web API\CRM\CRM\obj\Release\net8.0\CRM.genruntimeconfig.cache
 C:\Jessy's folder\Project\Web API\CRM\CRM\obj\Release\net8.0\ref\CRM.dll
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\rpswa.dswa.cache.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\appsettings.Development.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\appsettings.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\CRM.staticwebassets.endpoints.json
@@ -179,6 +180,7 @@ C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\CRM.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\CRM.pdb
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Azure.Core.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Azure.Identity.dll
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Forge.OpenAI.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Humanizer.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Microsoft.Build.Locator.dll
@@ -216,6 +218,7 @@ C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Microsoft.OpenA
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Microsoft.SqlServer.Server.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Mono.TextTemplating.dll
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Newtonsoft.Json.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -318,7 +321,6 @@ C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\runtimes\win\li
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\CRM.csproj.AssemblyReference.cache
-C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\rpswa.dswa.cache.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\CRM.GeneratedMSBuildEditorConfig.editorconfig
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\CRM.AssemblyInfoInputs.cache
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\CRM.AssemblyInfo.cs

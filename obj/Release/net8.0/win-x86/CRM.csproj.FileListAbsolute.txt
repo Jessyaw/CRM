@@ -158,3 +158,5 @@ C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\win-x86\refint\
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\win-x86\CRM.pdb
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\win-x86\CRM.genruntimeconfig.cache
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\win-x86\ref\CRM.dll
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\win-x86\Forge.OpenAI.dll
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\win-x86\Newtonsoft.Json.dll
