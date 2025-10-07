@@ -341,3 +341,5 @@ C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\CRM.pdb
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\CRM.genruntimeconfig.cache
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\ref\CRM.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Debug\net8.0\Forge.OpenAI.dll
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Debug\net8.0\Newtonsoft.Json.dll
