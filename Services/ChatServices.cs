@@ -60,7 +60,7 @@ namespace CRM.Services
                 "do NOT generate SQL. Instead, reply naturally in plain text asking for clarification, for example: " +
                 "'Sure! Could you please specify what details you want — books, members, or borrow records?'\n\n" +
                 "3️. If the question is casual or unrelated (like 'hi', 'thanks', 'how are you', 'who are you'), " +
-                "reply naturally as a chatbot (e.g., 'Hi there!', 'I’m your library assistant!').\n\n" +
+                "reply naturally as a chatbot (e.g., 'Hi there!', Hi! I’m Bibliobot, your library assistant. How can I help you today?').\n\n" +
                 "If you decide to generate SQL, follow these rules strictly:\n" +
                 "- Return **only** the raw SQL query (no markdown, no ```sql fences, no explanations, no extra text).\n" +
                 "only select isActive users or books or anything"+
