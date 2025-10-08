@@ -169,7 +169,6 @@ C:\Jessy's folder\Project\Web API\CRM\CRM\obj\Release\net8.0\refint\CRM.dll
 C:\Jessy's folder\Project\Web API\CRM\CRM\obj\Release\net8.0\CRM.pdb
 C:\Jessy's folder\Project\Web API\CRM\CRM\obj\Release\net8.0\CRM.genruntimeconfig.cache
 C:\Jessy's folder\Project\Web API\CRM\CRM\obj\Release\net8.0\ref\CRM.dll
-C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\rpswa.dswa.cache.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\appsettings.Development.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\appsettings.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\CRM.staticwebassets.endpoints.json
@@ -321,6 +320,7 @@ C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\runtimes\win\li
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Release\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\CRM.csproj.AssemblyReference.cache
+C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\rpswa.dswa.cache.json
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\CRM.GeneratedMSBuildEditorConfig.editorconfig
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\CRM.AssemblyInfoInputs.cache
 C:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\obj\Release\net8.0\CRM.AssemblyInfo.cs

@@ -17,7 +17,7 @@ namespace CRM.Services
         public ChatServices(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
-            _geminiKey = configuration["GEMINI_KEY"];
+            //_geminiKey = configuration["GEMINI_KEY"];
         }
 
         public async Task<Chat> ListAvailableModels()
@@ -63,6 +63,7 @@ namespace CRM.Services
                 "reply naturally as a chatbot (e.g., 'Hi there!', 'I’m your library assistant!').\n\n" +
                 "If you decide to generate SQL, follow these rules strictly:\n" +
                 "- Return **only** the raw SQL query (no markdown, no ```sql fences, no explanations, no extra text).\n" +
+                "only select isActive users or books or anything"+
                 "- Only SELECT queries are allowed.\n" +             
                 "- Never include these fields: ID, IsActive, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn.\n" +
                 "Whenever you use an aggregate function (like SUM, COUNT, AVG, MAX, MIN), " +
@@ -138,27 +139,28 @@ namespace CRM.Services
                     foreach (DataColumn col in dt.Columns)
                     {
                         dictionary[col.ColumnName] = dr[col];
-                        rows.Add(dictionary);
+                       
                     }
+                    rows.Add(dictionary);
                 }
                 chat.Response = Newtonsoft.Json.JsonConvert.SerializeObject(rows);
 
 
-                var stringBuilder = new StringBuilder();
-                foreach (DataColumn col in dt.Columns)
-                {
-                    stringBuilder.Append(col.ColumnName + '\t');
-                }
-                stringBuilder.AppendLine();
+                //var stringBuilder = new StringBuilder();
+                //foreach (DataColumn col in dt.Columns)
+                //{
+                //    stringBuilder.Append(col.ColumnName + '\t');
+                //}
+                //stringBuilder.AppendLine();
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    foreach (DataColumn col in dt.Columns)
-                    {
-                        stringBuilder.Append(row[col]?.ToString() + '\t');
-                    }
-                    stringBuilder.AppendLine();
-                }
+                //foreach (DataRow row in dt.Rows)
+                //{
+                //    foreach (DataColumn col in dt.Columns)
+                //    {
+                //        stringBuilder.Append(row[col]?.ToString() + '\t');
+                //    }
+                //    stringBuilder.AppendLine();
+                //}
                 chat.Status = "S";
                 chat.Message = "Fetching data successfully!!";
 
