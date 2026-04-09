@@ -38,7 +38,7 @@ namespace CRM.Services
             message.From.Add(new MailboxAddress("Mini core CRM", "minicorecrm@gmail.com"));
             message.To.Add(new MailboxAddress("", toEmail));
             message.Subject = "Verify Your Email";
-            string verifyLink = $"http://jessyaw.github.io/Portfolio/verify?token={token}";
+            string verifyLink = $"http://jessyaw.github.io/Portfolio/#/verify?token={token}";
             message.Body = new TextPart("html")
             {
                 Text = $"click below to verify your account" +
