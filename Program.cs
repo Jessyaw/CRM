@@ -17,6 +17,7 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(b
 builder.Services.AddScoped<ICommentServices,CommentServices>();
 builder.Services.AddScoped<ILibraryServices,LibraryServices>();
 builder.Services.AddScoped<IChatServices,ChatServices>();
+builder.Services.AddScoped<ICRMServices,CRMServices>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(option =>

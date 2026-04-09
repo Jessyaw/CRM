@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\CRM.csproj": {}
+    "D:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\CRM.csproj": {}
   },
   "projects": {
-    "C:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\CRM.csproj": {
+    "D:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\CRM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\CRM.csproj",
+        "projectUniqueName": "D:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\CRM.csproj",
         "projectName": "CRM",
-        "projectPath": "C:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\CRM.csproj",
+        "projectPath": "D:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\CRM.csproj",
         "packagesPath": "C:\\Users\\jessy\\.nuget\\packages\\",
-        "outputPath": "C:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\obj\\",
+        "outputPath": "D:\\Jessy's folder\\Jessy\\Jessy\\Web API\\CRM\\CRM\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[1.6.2, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.15.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[9.0.8, )"
@@ -92,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
