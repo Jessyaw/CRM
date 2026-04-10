@@ -1,10 +1,11 @@
 ﻿using CRM.Models;
 using CRM.Services.Interfaces;
+using MailKit.Net.Smtp;
 using Microsoft.Data.SqlClient;
 using MimeKit;
+using System.Collections.Generic;
 using System.Data;
 using System.Net.Mail;
-using MailKit.Net.Smtp;
 using System.Security.Cryptography;
 
 namespace CRM.Services
@@ -190,6 +191,45 @@ namespace CRM.Services
 
                 json.Status = dt.Rows[0]["Status"].ToString();
                 json.Message = dt.Rows[0]["Message"].ToString();
+            }
+            catch (Exception e)
+            {
+                json.Status = "F";
+                json.Message = "Something went wrong!!";
+            }
+
+            return json;
+        }
+        public JsonResponse FetchUserData(Login login)
+        {
+
+            JsonResponse json = new JsonResponse();
+            string proc = "SP_FetchUserData";
+            List<Login> loginList = new List<Login>();
+            try
+            {
+                SqlConnection sqlConnection = new SqlConnection(_connectionString);
+
+                SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@ID", login.ID);
+                SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+                DataTable dt = new DataTable();
+                sqlConnection.Open();
+                adapter.Fill(dt);
+                sqlConnection.Close();
+
+                login.ID = Convert.ToInt32(dt.Rows[0]["UserID"]);
+                login.FullName = dt.Rows[0]["Name"].ToString();
+                login.Email = dt.Rows[0]["Email"].ToString();
+                login.RoleID = Convert.ToInt32(dt.Rows[0]["RoleID"]);
+                login.TeamID = Convert.ToInt32(dt.Rows[0]["TeamID"]);
+
+
+
+                json.Status = "Success";
+                json.Message = "S";
+                json.Data = loginList;
             }
             catch (Exception e)
             {
