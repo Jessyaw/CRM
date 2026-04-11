@@ -2644,6 +2644,11 @@
           "emailVerificationToken": {
             "type": "string",
             "nullable": true
+          },
+          "emailVerificationTokenExpiry": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false

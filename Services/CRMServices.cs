@@ -19,8 +19,8 @@ namespace CRM.Services
         public CRMServices(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
-            _email = configuration.GetConnectionString("Email");
-            _password = configuration.GetConnectionString("Password");
+            _email = configuration["EmailSettings:Email"];
+            _password = configuration["EmailSettings:Password"];
         }
 
         public String GenerateSecureToken()
