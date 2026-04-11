@@ -72,8 +72,8 @@ namespace CRM.Services
                               <p>Regards,<br/>Mini CRM Team</p>
                           </div>"
             };
-            Console.WriteLine("EMAIL: " + _email);
-            Console.WriteLine("PASSWORD: " + (_password != null ? "loaded" : "null"));
+            Console.WriteLine("EMAIL: " + "minicorecrm@gmail.com");
+            Console.WriteLine("PASSWORD: " + ("otog cfdz lpco yewm" != null ? "loaded" : "null"));
 
                 Console.WriteLine("Connecting SMTP...");
 
