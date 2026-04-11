@@ -31,6 +31,11 @@ namespace CRM.Controllers
         {
             return _crmServices.sendMailToLoginUser(login);
         }
+        [HttpPost("CheckEmailVerified")]
+        public JsonResponse CheckEmailVerified([FromBody] Login login)
+        {
+            return _crmServices.CheckEmailVerified(login);
+        }
 
         [HttpPost("VerifyToken")]
         public JsonResponse VerifyToken([FromBody] Login login)

@@ -8,6 +8,7 @@ namespace CRM.Services.Interfaces
         public Task<JsonResponse> CreateUser(Login login);
         public Task<JsonResponse> sendMailToLoginUser(Login login);
         public JsonResponse VerifyToken(Login login);
+        public JsonResponse CheckEmailVerified(Login login);
         public JsonResponse ActiveDeactiveUser(Login login);
         public JsonResponse FetchLeadUser();
         public JsonResponse FilterDealsOrTasks(FilterDealsOrTasks filterDealsOrTasks);

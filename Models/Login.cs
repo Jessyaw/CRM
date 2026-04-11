@@ -7,12 +7,13 @@
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string Role { get; set; }
-        public int RoleID { get; set; }
+        public int? RoleID { get; set; }
         public string Team { get; set; }
         public int? TeamID { get; set; }
         public bool IsActive { get; set; }
         public string Email { get; set; }
         public bool IsEmailVerified { get; set; }
         public string EmailVerificationToken { get; set; }
+        public DateTime? EmailVerificationTokenExpiry { get; set; }
     }
 }

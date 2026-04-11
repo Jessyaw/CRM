@@ -275,6 +275,32 @@
   },
   {
     "ContainingType": "CRM.Controllers.CRMController",
+    "Method": "CheckEmailVerified",
+    "RelativePath": "CRM/CheckEmailVerified",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "CRM.Models.Login",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CRM.Models.JsonResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CRM.Controllers.CRMController",
     "Method": "CreateUser",
     "RelativePath": "CRM/CreateUser",
     "HttpMethod": "POST",

@@ -13,10 +13,14 @@ namespace CRM.Services
     public class CRMServices : ICRMServices
     {
         private readonly string _connectionString;
+        private readonly string _email;
+        private readonly string _password;
 
         public CRMServices(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _email = configuration.GetConnectionString("Email");
+            _password = configuration.GetConnectionString("Password");
         }
 
         public String GenerateSecureToken()
@@ -42,13 +46,34 @@ namespace CRM.Services
             string verifyLink = $"http://jessyaw.github.io/Portfolio/#/verify?token={token}";
             message.Body = new TextPart("html")
             {
-                Text = $"click below to verify your account" +
-                $"<a href='{verifyLink}'>Verify Account</a>"
+                Text = $@"
+                          <div style='font-family: Arial, sans-serif; line-height: 1.6;'>
+                              <h2 style='color: #2e7d32;'>Mini CRM</h2>
+
+                              <p>Hello,</p>
+
+                              <p>Thank you for signing up. Please confirm your email address by clicking the button below:</p>
+
+                              <p style='margin: 20px 0;'>
+                                  <a href='{verifyLink}' 
+                                     style='background-color: #2e7d32; color: white; padding: 10px 20px; 
+                                     text-decoration: none; border-radius: 5px; display: inline-block;'>
+                                     Verify Email
+                                  </a>
+                              </p>
+
+                              <p>If the button doesn’t work, copy and paste this link into your browser:</p>
+                              <p><a href='{verifyLink}'>{verifyLink}</a></p>
+
+                              <br/>
+
+                              <p>Regards,<br/>Mini CRM Team</p>
+                          </div>"
             };
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                client.Authenticate("minicorecrm@gmail.com", "otog cfdz lpco yewm");
+                client.Authenticate(_email, _password);
                 client.Send(message);
                 client.Disconnect(true);
             }
@@ -57,6 +82,7 @@ namespace CRM.Services
         public async Task<JsonResponse> CreateUser(Login login)
         {
             login.EmailVerificationToken = GenerateSecureToken();
+            DateTime expiry = DateTime.UtcNow.AddHours(24);
             JsonResponse json = new JsonResponse();
             string proc = "SP_CreateUser";
             try
@@ -73,16 +99,20 @@ namespace CRM.Services
                 sqlCommand.Parameters.AddWithValue("@Email", login.Email);
                 sqlCommand.Parameters.AddWithValue("@IsEmailVerified", 0);
                 sqlCommand.Parameters.AddWithValue("@EmailVerificationToken", login.EmailVerificationToken);
+                sqlCommand.Parameters.AddWithValue("@EmailVerificationTokenExpiry", expiry);
                 SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
                 adapter.Fill(dt);
                 sqlConnection.Close();
 
+
                 json.Status = dt.Rows[0]["Status"].ToString();
                 json.Message = dt.Rows[0]["Message"].ToString();
-
-                await SendVerificationEmail(login.Email, login.EmailVerificationToken);
+                if (json.Status == "S")
+                {
+                    await SendVerificationEmail(login.Email, login.EmailVerificationToken);
+                }
 
 
             }
@@ -101,9 +131,30 @@ namespace CRM.Services
 
             try
             {
+                DateTime expiry = DateTime.UtcNow.AddHours(24);
+
+                using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand sqlCommand = new SqlCommand("SP_UpdateVerificationToken", sqlConnection))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        sqlCommand.Parameters.AddWithValue("@Email", login.Email);
+                        sqlCommand.Parameters.AddWithValue("@EmailVerificationToken", login.EmailVerificationToken);
+                        sqlCommand.Parameters.AddWithValue("@EmailVerificationTokenExpiry", expiry);
+
+                        sqlConnection.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        sqlConnection.Close();
+                    }
+                }
+
                 await SendVerificationEmail(login.Email, login.EmailVerificationToken);
+
+                json.Status = "S";
+                json.Message = "Verification email sent!";
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 json.Status = "F";
                 json.Message = "Something went wrong!!";
@@ -129,8 +180,17 @@ namespace CRM.Services
                 adapter.Fill(dt);
                 sqlConnection.Close();
 
-                json.Status = dt.Rows[0]["Status"].ToString();
-                json.Message = dt.Rows[0]["Message"].ToString();
+
+                if (dt.Rows.Count > 0)
+                {
+                    json.Status = dt.Rows[0]["Status"].ToString();
+                    json.Message = dt.Rows[0]["Message"].ToString();
+                }
+                else
+                {
+                    json.Status = "F";
+                    json.Message = "Invalid token!";
+                }
             }
             catch (Exception e)
             {
