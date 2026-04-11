@@ -39,9 +39,7 @@ namespace CRM.Services
 
         public async Task SendVerificationEmail(string toEmail, string token)
         {
-            try
-            {
-                var message = new MimeMessage();
+            var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Mini core CRM", "minicorecrm@gmail.com"));
             message.To.Add(new MailboxAddress("", toEmail));
             message.Subject = "Verify Your Email";
@@ -72,30 +70,13 @@ namespace CRM.Services
                               <p>Regards,<br/>Mini CRM Team</p>
                           </div>"
             };
-            Console.WriteLine("EMAIL: " + "minicorecrm@gmail.com");
-            Console.WriteLine("PASSWORD: " + ("otog cfdz lpco yewm" != null ? "loaded" : "null"));
 
-                Console.WriteLine("Connecting SMTP...");
-
-                using (var client = new MailKit.Net.Smtp.SmtpClient())
-                {
-                    client.Timeout = 10000;
-
-                    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                    Console.WriteLine("Connected");
-
-                    client.Authenticate(_email, _password);
-                    Console.WriteLine("Authenticated");
-
-                    await client.SendAsync(message);
-                    Console.WriteLine("Mail sent");
-
-                    client.Disconnect(true);
-                }
-            }
-            catch (Exception ex)
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
-                Console.WriteLine("SMTP ERROR: " + ex.Message);
+                client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                client.Authenticate(_email, _password);
+                client.Send(message);
+                client.Disconnect(true);
             }
         }
 
