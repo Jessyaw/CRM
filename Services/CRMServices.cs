@@ -74,12 +74,22 @@ namespace CRM.Services
             };
             Console.WriteLine("EMAIL: " + _email);
             Console.WriteLine("PASSWORD: " + (_password != null ? "loaded" : "null"));
-           
+
+                Console.WriteLine("Connecting SMTP...");
+
                 using (var client = new MailKit.Net.Smtp.SmtpClient())
                 {
+                    client.Timeout = 10000;
+
                     client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    Console.WriteLine("Connected");
+
                     client.Authenticate(_email, _password);
-                    client.Send(message);
+                    Console.WriteLine("Authenticated");
+
+                    await client.SendAsync(message);
+                    Console.WriteLine("Mail sent");
+
                     client.Disconnect(true);
                 }
             }
