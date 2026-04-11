@@ -39,7 +39,9 @@ namespace CRM.Services
 
         public async Task SendVerificationEmail(string toEmail, string token)
         {
-            var message = new MimeMessage();
+            try
+            {
+                var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Mini core CRM", "minicorecrm@gmail.com"));
             message.To.Add(new MailboxAddress("", toEmail));
             message.Subject = "Verify Your Email";
@@ -72,8 +74,7 @@ namespace CRM.Services
             };
             Console.WriteLine("EMAIL: " + _email);
             Console.WriteLine("PASSWORD: " + (_password != null ? "loaded" : "null"));
-            try
-            {
+           
                 using (var client = new MailKit.Net.Smtp.SmtpClient())
                 {
                     client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
