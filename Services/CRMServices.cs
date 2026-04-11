@@ -70,6 +70,8 @@ namespace CRM.Services
                               <p>Regards,<br/>Mini CRM Team</p>
                           </div>"
             };
+            Console.WriteLine("EMAIL: " + _email);
+            Console.WriteLine("PASSWORD: " + (_password != null ? "loaded" : "null"));
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
