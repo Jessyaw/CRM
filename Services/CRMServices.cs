@@ -70,11 +70,11 @@ namespace CRM.Services
                               <p>Regards,<br/>Mini CRM Team</p>
                           </div>"
             };
-
+       
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                client.Authenticate(_email, _password);
+                client.Authenticate("minicorecrm@gmail.com", "otog cfdz lpco yewm");
                 client.Send(message);
                 client.Disconnect(true);
             }
