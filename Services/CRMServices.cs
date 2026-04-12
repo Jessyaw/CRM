@@ -74,7 +74,7 @@ namespace CRM.Services
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                client.Authenticate("minicorecrm@gmail.com", "otog cfdz lpco yewm");
+                client.Authenticate("minicorecrm@gmail.com", "vpzk bqgh gltq jthu");
                 client.Send(message);
                 client.Disconnect(true);
             }
