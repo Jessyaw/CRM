@@ -83,7 +83,7 @@ namespace CRM.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("SMTP ERROR", ex.Message);
+                Console.WriteLine("SMTP ERROR : "+ ex.Message);
             }
         }
 
