@@ -114,8 +114,6 @@ namespace CRM.Services
                 {
                     await SendVerificationEmail(login.Email, login.EmailVerificationToken);
                 }
-
-
             }
             catch (Exception e)
             {
