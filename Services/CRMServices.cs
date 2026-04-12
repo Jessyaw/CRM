@@ -39,14 +39,16 @@ namespace CRM.Services
 
         public async Task SendVerificationEmail(string toEmail, string token)
         {
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Mini core CRM", "minicorecrm@gmail.com"));
-            message.To.Add(new MailboxAddress("", toEmail));
-            message.Subject = "Verify Your Email";
-            string verifyLink = $"http://jessyaw.github.io/Portfolio/#/verify?token={token}";
-            message.Body = new TextPart("html")
+            try
             {
-                Text = $@"
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Mini core CRM", "minicorecrm@gmail.com"));
+                message.To.Add(new MailboxAddress("", toEmail));
+                message.Subject = "Verify Your Email";
+                string verifyLink = $"http://jessyaw.github.io/Portfolio/#/verify?token={token}";
+                message.Body = new TextPart("html")
+                {
+                    Text = $@"
                           <div style='font-family: Arial, sans-serif; line-height: 1.6;'>
                               <h2 style='color: #2e7d32;'>Mini CRM</h2>
 
@@ -69,14 +71,19 @@ namespace CRM.Services
 
                               <p>Regards,<br/>Mini CRM Team</p>
                           </div>"
-            };
-       
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
+                };
+
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    client.Authenticate("minicorecrm@gmail.com", "vpzk bqgh gltq jthu");
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+            }
+            catch (Exception ex)
             {
-                client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                client.Authenticate("minicorecrm@gmail.com", "vpzk bqgh gltq jthu");
-                client.Send(message);
-                client.Disconnect(true);
+                Console.WriteLine("SMTP ERROR", ex.Message);
             }
         }
 
