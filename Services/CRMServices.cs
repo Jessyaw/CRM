@@ -40,6 +40,10 @@ namespace CRM.Services
             try
             {
                 var apikey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? _apiKey;
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    throw new Exception("SendGrid API Key is missing!");
+                }
                 var client = new SendGrid.SendGridClient(apikey);
                 var from = new SendGrid.Helpers.Mail.EmailAddress("jcorecrm@gmail.com", "JCore CRM");
                 var to = new SendGrid.Helpers.Mail.EmailAddress(toEmail);
@@ -78,7 +82,7 @@ namespace CRM.Services
                     htmlContent
                    );
                 var response = await client.SendEmailAsync(message);
-                Console.WriteLine("SendGrid Status: " + response.StatusCode);
+                Console.WriteLine("SendGrid ERROR: " + ex.Message);
                 //using (var client = new MailKit.Net.Smtp.SmtpClient())
                 //{
                 //    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
