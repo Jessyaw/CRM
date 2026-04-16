@@ -447,11 +447,78 @@
         }
       }
     },
-    "/CRM/FetchLeadUser": {
-      "get": {
+    "/CRM/FetchUserData": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CRM/FetchLeadUser": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -543,17 +610,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FilterDealsOrTasks"
+                "$ref": "#/components/schemas/FilterRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/FilterDealsOrTasks"
+                "$ref": "#/components/schemas/FilterRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/FilterDealsOrTasks"
+                "$ref": "#/components/schemas/FilterRequest"
               }
             }
           }
@@ -631,10 +698,29 @@
       }
     },
     "/CRM/FetchLead": {
-      "get": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -689,10 +775,29 @@
       }
     },
     "/CRM/FetchDeals": {
-      "get": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -718,10 +823,29 @@
       }
     },
     "/CRM/FetchContacts": {
-      "get": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -863,10 +987,29 @@
       }
     },
     "/CRM/FetchTasks": {
-      "get": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -892,10 +1035,29 @@
       }
     },
     "/CRM/FetchCurrMonthTasks": {
-      "get": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -921,10 +1083,29 @@
       }
     },
     "/CRM/FetchCRMStatData": {
-      "get": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -950,10 +1131,29 @@
       }
     },
     "/CRM/FetchRecentTasks": {
-      "get": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -979,10 +1179,29 @@
       }
     },
     "/CRM/FetchRecentDeals": {
-      "get": {
+      "post": {
         "tags": [
           "CRM"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CRMFilters"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -2226,6 +2445,26 @@
         },
         "additionalProperties": false
       },
+      "CRMFilters": {
+        "type": "object",
+        "properties": {
+          "roleID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teamID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Chat": {
         "type": "object",
         "properties": {
@@ -2335,6 +2574,10 @@
         "type": "object",
         "properties": {
           "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teamID": {
             "type": "integer",
             "format": "int32"
           },
@@ -2485,6 +2728,18 @@
         },
         "additionalProperties": false
       },
+      "FilterRequest": {
+        "type": "object",
+        "properties": {
+          "crmFilters": {
+            "$ref": "#/components/schemas/CRMFilters"
+          },
+          "filterDealsOrTasks": {
+            "$ref": "#/components/schemas/FilterDealsOrTasks"
+          }
+        },
+        "additionalProperties": false
+      },
       "JsonResponse": {
         "type": "object",
         "properties": {
@@ -2524,6 +2779,10 @@
             "format": "int32"
           },
           "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teamID": {
             "type": "integer",
             "format": "int32"
           },

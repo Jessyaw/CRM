@@ -3,6 +3,7 @@
     public class Deals
     {
         public int ID { get;set; }
+        public int TeamID { get;set; }
         public string Title { get;set; }
         public string Contact { get;set; }
         public int ContactID { get;set; }

@@ -13,14 +13,12 @@ namespace CRM.Services
     public class CRMServices : ICRMServices
     {
         private readonly string _connectionString;
-        private readonly string _email;
-        private readonly string _password;
+        private readonly string _apiKey;
 
         public CRMServices(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
-            _email = configuration["EmailSettings:Email"];
-            _password = configuration["EmailSettings:Password"];
+            _apiKey = configuration["SendGrid:ApiKey"];
         }
 
         public String GenerateSecureToken()
@@ -41,49 +39,57 @@ namespace CRM.Services
         {
             try
             {
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Mini core CRM", "minicorecrm@gmail.com"));
-                message.To.Add(new MailboxAddress("", toEmail));
-                message.Subject = "Verify Your Email";
+                var apikey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? _apiKey;
+                var client = new SendGrid.SendGridClient(apikey);
+                var from = new SendGrid.Helpers.Mail.EmailAddress("jcorecrm@gmail.com", "JCore CRM");
+                var to = new SendGrid.Helpers.Mail.EmailAddress(toEmail);
+
+               // var message = new MimeMessage();
+               // message.From.Add(new MailboxAddress("Mini core CRM", "minicorecrm@gmail.com"));
+               // message.To.Add(new MailboxAddress("", toEmail));
+               // message.Subject = "Verify Your Email";
+
                 string verifyLink = $"http://jessyaw.github.io/Portfolio/#/verify?token={token}";
-                message.Body = new TextPart("html")
-                {
-                    Text = $@"
-                          <div style='font-family: Arial, sans-serif; line-height: 1.6;'>
-                              <h2 style='color: #2e7d32;'>Mini CRM</h2>
-
-                              <p>Hello,</p>
-
-                              <p>Thank you for signing up. Please confirm your email address by clicking the button below:</p>
-
-                              <p style='margin: 20px 0;'>
-                                  <a href='{verifyLink}' 
-                                     style='background-color: #2e7d32; color: white; padding: 10px 20px; 
-                                     text-decoration: none; border-radius: 5px; display: inline-block;'>
-                                     Verify Email
-                                  </a>
-                              </p>
-
-                              <p>If the button doesn’t work, copy and paste this link into your browser:</p>
-                              <p><a href='{verifyLink}'>{verifyLink}</a></p>
-
-                              <br/>
-
-                              <p>Regards,<br/>Mini CRM Team</p>
-                          </div>"
-                };
-
-                using (var client = new MailKit.Net.Smtp.SmtpClient())
-                {
-                    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                    client.Authenticate("minicorecrm@gmail.com", "vpzk bqgh gltq jthu");
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
+                var htmlContent = $@"
+                        <div style='font-family: Arial, sans-serif; line-height: 1.6;'>
+                            <h2 style='color: #2e7d32;'>Mini CRM</h2>
+                        
+                            <p>Hello,</p>
+                        
+                            <p>Thank you for signing up. Please confirm your email address:</p>
+                        
+                            <p style='margin: 20px 0;'>
+                                <a href='{verifyLink}' 
+                                   style='background-color: #2e7d32; color: white; padding: 10px 20px; 
+                                   text-decoration: none; border-radius: 5px; display: inline-block;'>
+                                   Verify Email
+                                </a>
+                            </p>
+                        
+                            <p><a href='{verifyLink}'>{verifyLink}</a></p>
+                        
+                            <p>Regards,<br/>Mini CRM Team</p>
+                        </div>";
+                var message = SendGrid.Helpers.Mail.MailHelper.CreateSingleEmail(
+                    from,
+                    to,
+                    "Verify Your Email",
+                    "Please, Verify Your Email",
+                    htmlContent
+                   );
+                var response = await client.SendEmailAsync(message);
+                Console.WriteLine("SendGrid Status: " + response.StatusCode);
+                //using (var client = new MailKit.Net.Smtp.SmtpClient())
+                //{
+                //    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                //    client.Authenticate("minicorecrm@gmail.com", "vpzk bqgh gltq jthu");
+                //    client.Send(message);
+                //    client.Disconnect(true);
+                //}
             }
             catch (Exception ex)
             {
-                Console.WriteLine("SMTP ERROR : "+ ex.Message);
+                Console.WriteLine("send drid ERROR : " + ex.Message);
             }
         }
 
@@ -289,13 +295,13 @@ namespace CRM.Services
                 login.FullName = dt.Rows[0]["Name"].ToString();
                 login.Email = dt.Rows[0]["Email"].ToString();
                 login.RoleID = Convert.ToInt32(dt.Rows[0]["RoleID"]);
-                login.TeamID = Convert.ToInt32(dt.Rows[0]["TeamID"]);
+                login.TeamID = dt.Rows[0]["TeamID"] != DBNull.Value ? Convert.ToInt32(dt.Rows[0]["TeamID"]) : 0;
 
 
 
-                json.Status = "Success";
-                json.Message = "S";
-                json.Data = loginList;
+                json.Status = "S";
+                json.Message = "Login Success";
+                json.Data = login;
             }
             catch (Exception e)
             {
@@ -344,7 +350,7 @@ namespace CRM.Services
             return json;
         }
 
-        public JsonResponse FilterDealsOrTasks(FilterDealsOrTasks filterDealsOrTasks)
+        public JsonResponse FilterDealsOrTasks(FilterRequest request)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -353,18 +359,21 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 string proc = "SP_FilterDealsOrTasks";
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
-                sqlCommand.Parameters.AddWithValue("@IsDeals", filterDealsOrTasks.IsDeals);
-                sqlCommand.Parameters.AddWithValue("@StartDate", filterDealsOrTasks.StartDate);
-                sqlCommand.Parameters.AddWithValue("@EndDate", filterDealsOrTasks.EndDate);
-                sqlCommand.Parameters.AddWithValue("@StageID", filterDealsOrTasks.StageID);
-                sqlCommand.Parameters.AddWithValue("@StatusID", filterDealsOrTasks.StatusID);
+                sqlCommand.Parameters.AddWithValue("@IsDeals", request.filterDealsOrTasks.IsDeals);
+                sqlCommand.Parameters.AddWithValue("@StartDate", request.filterDealsOrTasks.StartDate);
+                sqlCommand.Parameters.AddWithValue("@EndDate", request.filterDealsOrTasks.EndDate);
+                sqlCommand.Parameters.AddWithValue("@StageID", request.filterDealsOrTasks.StageID);
+                sqlCommand.Parameters.AddWithValue("@StatusID", request.filterDealsOrTasks.StatusID);
+                sqlCommand.Parameters.AddWithValue("@RoleID", request.crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("@TeamID", request.crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("@UserID", request.crmFilters.UserID);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
                 DataSet ds = new DataSet();
                 sqlConnection.Open();
                 adapter.Fill(ds);
                 sqlConnection.Close();
-                if (filterDealsOrTasks.IsDeals)
+                if (request.filterDealsOrTasks.IsDeals)
                 {
                     foreach (DataRow row in ds.Tables[0].Rows)
                     {
@@ -385,7 +394,7 @@ namespace CRM.Services
                         var summary = ds.Tables[1].Rows[0];
                         foreach (var deal in filterDealsOrTasksList)
                         {
-                            deal.TotalDeals = Convert.ToInt32(summary["Total deals"]);
+                            deal.TotalDeals = Convert.ToInt32(summary["Total Deals"]);
                             deal.TotalWon = Convert.ToInt32(summary["Total Won"]);
                             deal.TotalLost = Convert.ToInt32(summary["Total Lost"]);
                             deal.TotalRevenue = Convert.ToInt32(summary["Total Revenue"]);
@@ -645,7 +654,7 @@ namespace CRM.Services
             return json;
         }
 
-        public JsonResponse FetchLeadUser()
+        public JsonResponse FetchLeadUser(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -655,6 +664,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -686,7 +698,7 @@ namespace CRM.Services
             }
             return json;
         }
-        public JsonResponse FetchLead()
+        public JsonResponse FetchLead(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -696,6 +708,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -727,7 +742,7 @@ namespace CRM.Services
             }
             return json;
         }
-        public JsonResponse FetchCRMStatData()
+        public JsonResponse FetchCRMStatData(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -737,6 +752,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("@TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("@UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -763,7 +781,7 @@ namespace CRM.Services
             }
             return json;
         }
-        public JsonResponse FetchContacts()
+        public JsonResponse FetchContacts(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -773,6 +791,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -802,7 +823,7 @@ namespace CRM.Services
             }
             return json;
         }
-        public JsonResponse FetchDeals()
+        public JsonResponse FetchDeals(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -812,6 +833,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -841,7 +865,7 @@ namespace CRM.Services
             }
             return json;
         }
-        public JsonResponse FetchRecentDeals()
+        public JsonResponse FetchRecentDeals(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -851,6 +875,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("@TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("@UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -880,7 +907,7 @@ namespace CRM.Services
             }
             return json;
         }
-        public JsonResponse FetchTasks()
+        public JsonResponse FetchTasks(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -890,6 +917,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -924,7 +954,7 @@ namespace CRM.Services
             }
             return json;
         }
-        public JsonResponse FetchRecentTasks()
+        public JsonResponse FetchRecentTasks(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -934,6 +964,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("@TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("@UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -968,7 +1001,7 @@ namespace CRM.Services
             }
             return json;
         }
-        public JsonResponse FetchCurrMonthTasks()
+        public JsonResponse FetchCurrMonthTasks(CRMFilters crmFilters)
         {
             JsonResponse json = new JsonResponse();
             try
@@ -978,6 +1011,9 @@ namespace CRM.Services
                 SqlConnection sqlConnection = new SqlConnection(_connectionString);
                 SqlCommand sqlCommand = new SqlCommand(proc, sqlConnection);
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.Parameters.AddWithValue("@RoleID", crmFilters.RoleID);
+                sqlCommand.Parameters.AddWithValue("@TeamID", crmFilters.TeamID);
+                sqlCommand.Parameters.AddWithValue("@UserID", crmFilters.UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dt = new DataTable();
                 sqlConnection.Open();
@@ -1179,6 +1215,7 @@ namespace CRM.Services
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                 sqlCommand.Parameters.AddWithValue("@ID", lead.ID);
                 sqlCommand.Parameters.AddWithValue("@UserID", lead.UserID);
+                sqlCommand.Parameters.AddWithValue("@TeamID", lead.TeamID);
                 sqlCommand.Parameters.AddWithValue("@LeadName", lead.Leadname);
                 sqlCommand.Parameters.AddWithValue("@Email", lead.Email);
                 sqlCommand.Parameters.AddWithValue("@Mobile", lead.Mobile);
@@ -1248,6 +1285,7 @@ namespace CRM.Services
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                 sqlCommand.Parameters.AddWithValue("@ID", deals.ID);
                 sqlCommand.Parameters.AddWithValue("@Title", deals.Title);
+                sqlCommand.Parameters.AddWithValue("@TeamID", deals.TeamID);
                 sqlCommand.Parameters.AddWithValue("@ContactID", deals.ContactID);
                 sqlCommand.Parameters.AddWithValue("@Amount", deals.Amount);
                 sqlCommand.Parameters.AddWithValue("@StageID", deals.StageID);
