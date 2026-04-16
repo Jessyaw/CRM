@@ -522,3 +522,5 @@ D:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Debug\net8.0\MailKit.dll
 D:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Debug\net8.0\MimeKit.dll
 D:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
 D:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Debug\net8.0\SendGrid.dll
+D:\Jessy's folder\Jessy\Jessy\Web API\CRM\CRM\bin\Debug\net8.0\StarkbankEcdsa.dll

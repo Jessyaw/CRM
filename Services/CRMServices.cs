@@ -40,7 +40,7 @@ namespace CRM.Services
             try
             {
                 var apikey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY") ?? _apiKey;
-                if (string.IsNullOrEmpty(apiKey))
+                if (string.IsNullOrEmpty(apikey))
                 {
                     throw new Exception("SendGrid API Key is missing!");
                 }
@@ -82,7 +82,7 @@ namespace CRM.Services
                     htmlContent
                    );
                 var response = await client.SendEmailAsync(message);
-                Console.WriteLine("SendGrid ERROR: " + ex.Message);
+                Console.WriteLine("SendGrid ERROR: " + response.StatusCode);
                 //using (var client = new MailKit.Net.Smtp.SmtpClient())
                 //{
                 //    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
