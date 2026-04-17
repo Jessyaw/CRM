@@ -8,7 +8,7 @@
         public string ConfirmPassword { get; set; }
         public string Role { get; set; }
         public int? RoleID { get; set; }
-        public string Team { get; set; }
+        public string? Team { get; set; }
         public int? TeamID { get; set; }
         public bool IsActive { get; set; }
         public string Email { get; set; }

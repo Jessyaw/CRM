@@ -2579,7 +2579,8 @@
           },
           "teamID": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "title": {
             "type": "string",
@@ -2784,7 +2785,8 @@
           },
           "teamID": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "leadname": {
             "type": "string",

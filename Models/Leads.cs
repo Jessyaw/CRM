@@ -7,7 +7,7 @@ namespace CRM.Models
     {
         public int ID { get; set; }
         public int UserID { get; set; }
-        public int TeamID { get; set; }
+        public int? TeamID { get; set; }
         public string Leadname { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; } = string.Empty;
